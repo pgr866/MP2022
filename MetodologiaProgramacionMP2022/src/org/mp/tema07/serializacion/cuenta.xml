@@ -1,0 +1,21 @@
+<org.mp.tema07.serializacion.CuentaCorriente>
+  <numero>111-111</numero>
+  <titular>Jose Pérez</titular>
+  <movimientos>
+    <org.mp.tema07.serializacion.Movimiento>
+      <concepto>concepto 1</concepto>
+      <fecha>2021-05-04 09:41:38.578 UTC</fecha>
+      <importe>12.12</importe>
+    </org.mp.tema07.serializacion.Movimiento>
+    <org.mp.tema07.serializacion.Movimiento>
+      <concepto>concepto 2</concepto>
+      <fecha>2021-05-04 09:41:38.578 UTC</fecha>
+      <importe>22.12</importe>
+    </org.mp.tema07.serializacion.Movimiento>
+    <org.mp.tema07.serializacion.Movimiento>
+      <concepto>ahorrillos</concepto>
+      <fecha>2021-05-04 09:41:38.581 UTC</fecha>
+      <importe>8.0</importe>
+    </org.mp.tema07.serializacion.Movimiento>
+  </movimientos>
+</org.mp.tema07.serializacion.CuentaCorriente>

@@ -1,0 +1,58 @@
+package org.mp.sesion04;
+
+import org.mp.sesion03.ArrayList;
+
+/**
+ * Clase generica para implementar pilas usando composicion con ArrayList
+ * 
+ * @author Pablo
+ * @param <E>
+ * @version 1.0
+ */
+public class GenericStack<E> {
+
+	private ArrayList<E> lista = new ArrayList<E>();
+
+	/**
+	 * Getter
+	 * 
+	 * @return devuelve el numero de elementos de la pila
+	 */
+	public int getSize() {
+		return lista.size();
+	}
+
+	/**
+	 * @return devuelve el elemento de la cima de la pila, no lo borra
+	 */
+	public E peek() {
+		return lista.get(getSize() - 1);
+	}
+
+	/**
+	 * Almacena un elemento en la cima de la pila
+	 * 
+	 * @param o objeto de tipo generico a almacenar
+	 */
+	public void push(E o) {
+		lista.add(o);
+	}
+
+	/**
+	 * @return elimina un elemento de la cima y lo de vuelve
+	 */
+	public E pop() {
+		E o = lista.get(getSize() - 1);
+		lista.remove(getSize() - 1);
+		return o;
+	}
+
+	public boolean isEmpty() {
+		return lista.isEmpty();
+	}
+
+	@Override
+	public String toString() {
+		return "Pila: " + lista.toString();
+	}
+}

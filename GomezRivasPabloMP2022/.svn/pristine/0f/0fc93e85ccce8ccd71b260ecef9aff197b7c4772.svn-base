@@ -1,0 +1,67 @@
+package org.mp.sesion01;
+
+public class Carta implements Comparable<Carta> {
+
+	private String palo;
+	private int numero;
+	private int valor;
+
+	public Carta() {
+		this.palo = "";
+		this.numero = 0;
+		this.valor = 0;
+	}
+
+	public Carta(String palo, int numero) {
+		this.palo = palo;
+		this.numero = numero;
+
+		switch (this.palo) {
+		case "O":
+			this.valor = numero;
+			break;
+		case "C":
+			this.valor = 12 + numero;
+			break;
+		case "E":
+			this.valor = 12 * 2 + numero;
+			break;
+		case "B":
+			this.valor = 12 * 3 + numero;
+			break;
+		default:
+			this.valor = 0;
+		}
+	}
+
+	public String getPalo() {
+		return palo;
+	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public int getValor() {
+		return valor;
+	}
+
+	public boolean equals(Carta cartas) {
+		// Carta otro = (Carta) obj; No se por que no va de esta manera
+		if (this.numero == cartas.numero && this.palo == cartas.palo && this.valor == cartas.valor)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public int compareTo(Carta o) {
+		if (this.valor == o.valor)
+			return 0;
+		else if (this.valor > o.valor)
+			return 1;
+		else
+			return -1;
+	}
+
+}

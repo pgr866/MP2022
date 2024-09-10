@@ -1,0 +1,217 @@
+package org.mp.sesion02;
+
+/**
+ * Clase que representa fracciones
+ * 
+ * @author Pablo
+ * @version 2.0
+ */
+public class Fraccion extends Number implements Comparable<Fraccion> {
+	private int numerador;
+	private int denominador;
+
+	/**
+	 * Constructor por defecto
+	 * 
+	 * Crea la fraccion nula
+	 */
+	public Fraccion() {
+		numerador = 0;
+		denominador = 1;
+	}
+
+	/**
+	 * Constructor
+	 * 
+	 * @param numerador   es de tipo entero
+	 * @param denominador es de tipo entero
+	 */
+	public Fraccion(int numerador, int denominador) {
+		this.numerador = ((denominador < 0) ? -1 : 1) * numerador;
+		this.denominador = Math.abs(denominador);
+
+	}
+
+	/**
+	 * Metodo que comprueba si dos objetos son iguales
+	 * 
+	 * @param obj es objeto de la clase Object
+	 * @return true si los dos objetos son iguales
+	 * @return false si los dos objetos no son iguales
+	 */
+	@Override
+	public boolean equals(Object obj) {
+
+		if (!(obj instanceof Fraccion))
+			return false;
+		Fraccion otro = (Fraccion) obj;
+		if (denominador != otro.denominador)
+			return false;
+		if (numerador != otro.numerador)
+			return false;
+		return true;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return numerador
+	 */
+	public int getNumerador() {
+		return numerador;
+	}
+
+	/**
+	 * Getter
+	 * 
+	 * @return denominador
+	 */
+	public int getDenominador() {
+		return denominador;
+	}
+
+	/**
+	 * Metodo que convierte cualquier objeto de la clase a String
+	 * 
+	 * @return fraccion en forma de String
+	 */
+	@Override
+	public String toString() {
+		if (denominador == 1)
+			return numerador + "";
+		else
+			return numerador + "/" + denominador;
+	}
+
+	/**
+	 * Metodo que suma dos fracciones
+	 * 
+	 * @param b es una fraccion que es un parametro que se suma al objeto
+	 * @return devuelve una fraccion nueva suma del objeto mas el parametro b
+	 */
+	public Fraccion sumar(Fraccion b) {
+		int num = numerador * b.getDenominador() + denominador * b.getNumerador();
+		int den = denominador * b.getDenominador();
+		return new Fraccion(num, den);
+
+	}
+
+	/**
+	 * Metodo que resta dos fracciones
+	 * 
+	 * @param b es una fraccion que es un parametro que se resta al objeto
+	 * @return devuelve una fraccion nueva resta del objeto menos el parametro b
+	 */
+	public Fraccion restar(Fraccion b) {
+		int num = numerador * b.getDenominador() - denominador * b.getNumerador();
+		int den = denominador * b.getDenominador();
+		return new Fraccion(num, den);
+	}
+
+	/**
+	 * Metodo que multiplica dos fracciones
+	 * 
+	 * @param b es una fraccion que es un parametro que se multiplica al objeto
+	 * @return devuelve una fraccion nueva producto del objeto por el parametro b
+	 */
+	public Fraccion multiplicar(Fraccion b) {
+		return new Fraccion(numerador * b.getNumerador(), denominador * b.getDenominador());
+	}
+
+	/**
+	 * Metodo que divide dos fracciones
+	 * 
+	 * @param b es una fraccion que es un parametro que se divide al objeto
+	 * @return devuelve una fraccion nueva cociente del objeto entre el parametro b
+	 */
+	public Fraccion dividir(Fraccion b) {
+		return new Fraccion(numerador * b.getDenominador(), denominador * b.getNumerador());
+	}
+
+	/**
+	 * Metodo que calcula el maximo comun divisor de dos enteros
+	 * 
+	 * @param u es entero
+	 * @param v es entero
+	 * @return maximo comun divisor de u y v
+	 */
+	private static int mcd(int u, int v) {
+		u = Math.abs(u);
+		v = Math.abs(v);
+		int r;
+		while (v != 0) {
+			r = u % v;
+			u = v;
+			v = r;
+		}
+		return u;
+	}
+
+	/**
+	 * Metodo que simplifica una fraccion
+	 * 
+	 * @return fraccion simplificada
+	 */
+	public Fraccion simplificar() {
+		int dividir = mcd(numerador, denominador);
+		numerador /= dividir;
+		denominador /= dividir;
+		return this;
+	}
+
+	/**
+	 * Metodo que compara dos objetos de la clase fraccion
+	 * 
+	 * @param o es la segunda fraccion
+	 * @return 1 si la primera fraccion es mayor que la segunda (pasada como
+	 *         parametro)
+	 * @return -1 si la primera fraccion es menor que la segunda (pasada como
+	 *         parametro)
+	 * @return 0 si las dos fracciones son iguales
+	 */
+	public int compareTo(Fraccion o) {
+		double valorFraccion = (double) numerador / denominador;
+		double valorOtro = (double) o.getNumerador() / o.getDenominador();
+
+		if (valorFraccion > valorOtro)
+			return 1;
+		else if (valorFraccion < valorOtro)
+			return -1;
+		else
+			return 0;
+
+	}
+
+	/**
+	 * @return el valor numerico de la fraccion truncado en un entero int
+	 */
+	@Override
+	public int intValue() {
+		return this.numerador / this.denominador;
+	}
+
+	/**
+	 * @return el valor numerico de la fraccion truncado en un entero long
+	 */
+	@Override
+	public long longValue() {
+		return (long) this.numerador / (long) this.denominador;
+	}
+
+	/**
+	 * @return el valor numerico de la fraccion en tipo float
+	 */
+	@Override
+	public float floatValue() {
+		return (float) this.numerador / (float) this.denominador;
+	}
+
+	/**
+	 * @return el valor numerico de la fraccion en tipo double
+	 */
+	@Override
+	public double doubleValue() {
+		return (double) this.numerador / (double) this.denominador;
+	}
+
+}

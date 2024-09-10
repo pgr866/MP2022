@@ -1,0 +1,132 @@
+package org.mp.sesion04;
+
+import java.util.StringTokenizer;
+
+/**
+ * Clase que permite evaluar una expresion aritmetica en notacion polaca inversa
+ * tiene un solo atributo privado, el cual es una pila (composicion con
+ * GenericStack)
+ * 
+ * @author Pablo
+ * @version 1.0
+ */
+public class Evaluador {
+
+	private GenericStack<Integer> pila;
+
+	/** Constructor por defecto Crea una pila vacia */
+	public Evaluador() {
+		pila = new GenericStack<Integer>();
+	}
+
+	/**
+	 * Metodo que elimina los espacios de una expresion
+	 * 
+	 * @param expresion
+	 * @return devuelve un array de String con los espacios eliminados
+	 */
+	public String[] eliminarBlancos(String expresion) {
+		StringTokenizer token = new StringTokenizer(expresion, "+*-/ ", true);
+		GenericQueue<String> cola = new GenericQueue<>();
+		while (token.hasMoreTokens()) {
+			String temporal = token.nextToken();
+			if (!temporal.equals(" "))
+				cola.enqueue(temporal);
+		}
+		String[] resultado = new String[cola.getSize()];
+		for (int i = 0; i < resultado.length; i++)
+			resultado[i] = cola.dequeue();
+
+		return resultado;
+	}
+
+	/**
+	 * Realiza la operacion indicada con el parametro op Se aplica a dos operandos
+	 * que se sacan de la pila y el resultado se mete en la pila
+	 * 
+	 * @param op            parametro de tipo char que indica la operacion a
+	 *                      realizar
+	 * @param operandosPila objeto de la clase GenericStack (pila de Integer)
+	 * @throws lanza una excepcion si al realizar la division, el denominador es 0
+	 */
+	public void procesarUnOperador(char op, GenericStack<Integer> operandosPila) {
+		Integer segundo = operandosPila.pop();
+		Integer primero = operandosPila.pop();
+		Integer resultado = new Integer(0);
+
+		switch (op) {
+		case '+':
+			resultado = primero + segundo;
+			break;
+		case '-':
+			resultado = primero - segundo;
+			break;
+		case '*':
+			resultado = primero * segundo;
+			break;
+		case '/':
+			if (segundo == 0)
+				throw new RuntimeException("No es posible una divisiÃ³n por cero");
+			resultado = primero / segundo;
+			break;
+		}
+		operandosPila.push(resultado);
+	}
+
+	/**
+	 * Elimina los blancos de una expresion y lo guarda en un array vuelve a pasar
+	 * el array a String para ver si son solo digitos , en ese caso , lo mete en una
+	 * pila si no son solo digitos , recorre el array completo y si el token es un
+	 * operador se procesa la operacion
+	 *
+	 * @param expresion
+	 * @return
+	 */
+	public int evaluarExpresion(String expresion) {
+		String[] eliminarBlancos = eliminarBlancos(expresion);
+		String soloDigitos = "";
+		String token = "";
+		for (int i = 0; i < eliminarBlancos.length; i++)
+			soloDigitos += eliminarBlancos[i];
+
+		if (soloDigitos(soloDigitos))
+			pila.push(new Integer(soloDigitos));
+		else {
+			for (int i = 0; i < eliminarBlancos.length; i++) {
+				token = eliminarBlancos[i];
+				if (esOperador(token)) {
+					char operador = token.charAt(0);
+					procesarUnOperador(operador, pila);
+				} else
+					pila.push(new Integer(token));
+			}
+		}
+		return pila.pop().intValue();
+	}
+
+	/**
+	 * Metodo que comprueba si la expresion solo contiene digitos (sin operadores ni
+	 * espacios)
+	 * 
+	 * @param expresion
+	 * @return true si la expresion solo tiene digitos
+	 * @return false si tiene operaciones y espacios
+	 */
+	private boolean soloDigitos(String expresion) {
+		for (int i = 0; i < expresion.length(); i++)
+			if (!Character.isDigit(expresion.charAt(i)))
+				return false;
+		return true;
+	}
+
+	/**
+	 * Metodo que comprueba si un token es un operador
+	 * 
+	 * @param token
+	 * @return true si es un operador
+	 * @return false si no es un operador
+	 */
+	private boolean esOperador(String token) {
+		return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+	}
+}

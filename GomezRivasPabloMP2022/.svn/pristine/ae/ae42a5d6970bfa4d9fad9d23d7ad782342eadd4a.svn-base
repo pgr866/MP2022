@@ -1,0 +1,63 @@
+package org.mp.sesion02;
+
+import java.util.GregorianCalendar;
+
+/**
+ * Clase que representa profesores, que son (hereda de) empleados, que a su vez
+ * son personas
+ * 
+ * @author Pablo
+ * @version 1.0
+ */
+public class Profesor extends Empleado {
+	private String horarioTutorias;
+	private int categoria;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param nombre            del profesor
+	 * @param direccion         del profesor
+	 * @param telefono          del profesor
+	 * @param email             del profesor
+	 * @param despacho          del profesor
+	 * @param salario           del profesor en euros por mes
+	 * @param fechaContratacion es la fecha en que el profesor fue contratado
+	 * @param horarioTutorias   es el horario de tutorias del profesor (dia e
+	 *                          intervalo de horas)
+	 * @param categoria         es el tipo de profesor (Ayudante, Titular de
+	 *                          Universidad o Catedratico de Universidad)
+	 */
+	public Profesor(String nombre, String direccion, String telefono, String email, String despacho, int salario,
+			GregorianCalendar fechaContratacion, String horarioTutorias, int categoria) {
+		super(nombre, direccion, telefono, email, despacho, salario, fechaContratacion);
+		this.horarioTutorias = horarioTutorias;
+		this.categoria = categoria;
+	}
+
+	/**
+	 * Metodo que convierte cualquier objeto de la clase a String
+	 * 
+	 * @return datos del profesor en forma de String
+	 */
+	public String toString() {
+		String categoriaString = "";
+		switch (categoria) {
+		case 1:
+			categoriaString = "Ayudante";
+			break;
+		case 2:
+			categoriaString = "Titular de Universidad";
+			break;
+		case 3:
+			categoriaString = "Catedrático de Universidad";
+			break;
+		}
+		return "Profesor " + categoriaString + "\n" + "Nombre = " + this.nombre + ", Dirección = " + this.direccion
+				+ ", Teléfono = " + this.telefono + ", email = " + this.email + "\n" + "Despacho = " + this.despacho
+				+ ", salario = " + this.salario + ", Fecha de contratación = "
+				+ this.fechaContratacion.get(GregorianCalendar.DATE) + "/"
+				+ (this.fechaContratacion.get(GregorianCalendar.MONTH) + 1) + "/"
+				+ this.fechaContratacion.get(GregorianCalendar.YEAR) + "\n" + "Horario = " + this.horarioTutorias;
+	}
+}
